@@ -1,0 +1,37 @@
+.MenuPageMainContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    user-select: none;
+}
+
+.MenuPageLinksArea {
+    margin: 8% 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.MenuPageLink {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255, 254, 254, 0.5);
+    border-radius: 5px;
+    width: 300px;
+    height: 40px;
+    box-shadow: 4px 4px 3px #3a3a3a;
+    color: rgba(255, 255, 255, 0.788);
+    background-color: transparent;
+    cursor: pointer;
+
+
+    &:active {
+        box-shadow: inset 2px 2px 2px #3a3a3a;
+    }
+}
