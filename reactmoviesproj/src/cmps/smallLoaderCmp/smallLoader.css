@@ -1,3 +1,11 @@
+.LoaderContainer{
+    height: 34%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 svg {
     width: 3.25em;
     transform-origin: center;

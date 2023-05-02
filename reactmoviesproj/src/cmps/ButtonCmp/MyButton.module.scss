@@ -1,0 +1,12 @@
+.MyButton {
+    border-radius: 5px;
+    height: 40px;
+    width: 90px;
+    font-weight: 550;
+    box-shadow: 3px 4px 2px rgba(63, 63, 63, 0.582);
+    border: none;
+
+    &:active {
+        box-shadow: inset 2px 2px 2px rgba(63, 63, 63, 0.582);
+    }
+}
