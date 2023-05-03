@@ -43,14 +43,15 @@
 }
 
 .InputsDivErrorMessage {
-    margin: 2% 0 0 0;
+    font-weight: bold;
+    margin: 4% 0 0 0;
     color: rgba(179, 0, 0, 0.856);
 }
 
 .LoginButtonsContainer {
-    margin-bottom: 15%;
-    display: inline-flex;
+    display: flex;
     justify-content: center;
     gap: 20px;
     width: 35%;
+    height: 20%;
 }

@@ -8,7 +8,7 @@ const { authenticateUser } = require("../models/usersBL");
 const filePath = path.join(__dirname, "../Users.json");
 
 router.post("/", async (req, res, next) => {
-  res.send(
+  res.json(
     await authenticateUser({
       userName: req.body.userName,
       password: req.body.password,

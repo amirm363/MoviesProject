@@ -1,7 +1,43 @@
+.AppContainer {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
 .MoviesLogo {
-    margin-top: 30px;
-    width: 1050px;
-    height: 200px;
+    width: 56%;
+    height: 17%;
     display: block;
-    margin: 0 auto 150px;
+    margin: 3% auto 5%;
+}
+
+.LogOutButton {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    color: rgba(255, 255, 255, 0.747);
+    background-color: rgba(0, 0, 0, 0.699);
+    font-size: 30px;
+    box-shadow: 2px 4px 4px rgb(34, 34, 34);
+
+
+    &:active {
+        box-shadow: none;
+    }
+
+    >span {
+        transition: transform 0.5s ease;
+        display: inline-block;
+
+        &:hover {
+
+            transform: rotateY(180deg);
+            color: rgb(204, 159, 10);
+            box-shadow: none;
+        }
+    }
 }

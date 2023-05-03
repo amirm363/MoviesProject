@@ -14,18 +14,19 @@ export default function LoginPage() {
     const [userCredentials, setUserCredentials] = useState<any>({ userName: "", password: "" })
     const [userLoggedIn, setUserLoggedIn] = useRecoilState<boolean>(isLoggedIn)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [wrongCredentials, setWrongCredentials] = useState<boolean>(false)
+    const [wrongCredentials, setWrongCredentials] = useState<any>({ state: false, error: "" })
 
 
     const logInUser = async () => {
         setIsLoading(!isLoading)
         const data = await axios.post('http://localhost:3001/', userCredentials)
         console.log(data.data)
-        if (data.data) {
+        if (data.data?.accessToken) {
+            sessionStorage.setItem("connectedUser", JSON.stringify(data.data))
             setUserLoggedIn(true)
         }
         else {
-            setWrongCredentials(true)
+            setWrongCredentials({ state: true, error: data.data.error })
             setIsLoading(false)
         }
 
@@ -34,7 +35,7 @@ export default function LoginPage() {
     const cancelLogin = () => {
         setIsLoading(false)
         setUserCredentials({ userName: "", password: "" })
-        setWrongCredentials(false);
+        setWrongCredentials({ state: false, error: "" });
     }
 
 
@@ -61,7 +62,7 @@ export default function LoginPage() {
                         <div className={Styles.InputsDiv}>
                             <Input type={"text"} title={"User Name"} stateFunction={(value: string) => setUserCredentials({ ...userCredentials, userName: value })} height={"45px"} width={"60%"} />
                             <Input type={"password"} title={"Password"} stateFunction={(value: string) => setUserCredentials({ ...userCredentials, password: value })} height={"45px"} width={"60%"} />
-                            {wrongCredentials && < span className={Styles.InputsDivErrorMessage}> Wrong user name or password, please try again.</span>}
+                            {wrongCredentials.state && < span className={Styles.InputsDivErrorMessage}>{wrongCredentials.error}</span>}
                         </div>}
                     <span className={Styles.LoginButtonsContainer}>
                         <MyButton onClickFunction={logInUser} title={"Confirm"} />
