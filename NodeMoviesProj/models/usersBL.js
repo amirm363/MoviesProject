@@ -35,7 +35,7 @@ const authenticateUser = async (user) => {
       return { error: "An error occured while trying to login" };
     }
   }
-  return { error: "Wrong user name of password" };
+  return { error: "Wrong user name or password" };
 };
 
 const checkForCredits = (user) => {
