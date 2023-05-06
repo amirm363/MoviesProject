@@ -7,7 +7,7 @@ const { authenticateUser } = require("../models/usersBL");
 
 const filePath = path.join(__dirname, "../Users.json");
 
-router.post("/", async (req, res, next) => {
+router.post("/", async (req, res) => {
   res.json(
     await authenticateUser({
       userName: req.body.userName,

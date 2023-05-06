@@ -11,11 +11,11 @@ interface MyFormProps {
     errorMessage?: string;
     confirmFunc: () => void;
     cancelFunc: () => void;
-
+    isLoading: boolean;
 }
 
-export default function MyForm({ header, handleKeyPress, inputsArray, errorMessage, confirmFunc, cancelFunc }: MyFormProps) {
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+export default function MyForm({ header, handleKeyPress, inputsArray, errorMessage, confirmFunc, cancelFunc, isLoading }: MyFormProps) {
+    const [loading, setLoading] = useState<boolean>(isLoading)
     const [inputs, setInputs] = useState<any[]>([...inputsArray])
     return (
         <>
@@ -25,7 +25,11 @@ export default function MyForm({ header, handleKeyPress, inputsArray, errorMessa
                     <h1>{header}</h1>
                     {isLoading ? <SmallLoaderCmp /> :
                         <div className={Styles.MyFormInputsDiv}>
-                            {inputsArray.map((input) => input)}
+                            {inputsArray.map((input, index) => {
+                                return <React.Fragment key={index}>
+                                    {input}
+                                </React.Fragment>
+                            })}
                         </div>}
                     <span className={Styles.MyFormButtonsContainer}>
                         <MyButton onClickFunction={confirmFunc} title={"Confirm"} />

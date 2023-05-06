@@ -1,0 +1,4 @@
+POST http://localhost:4000/CreateMovie
+content-type: application/json
+
+{"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJOYW1lIjoiYW1pcm0iLCJjcmVhdGVkRGF0ZSI6IjI5LzA0LzIwMjMifSwiaWF0IjoxNjgzMzc3NDc2fQ.Nycjmn58h9aBUejWwktXDVZA3opHF_lXrasPNnujlJQ","userName":"amirm","numOfTransactions":"99999","createdDate":"29/04/2023","isAdmin":true}

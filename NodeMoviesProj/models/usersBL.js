@@ -18,7 +18,11 @@ const authenticateUser = async (user) => {
     try {
       const result = await bcrypt.compare(plainPass, filteredUser[0].password);
       if (result) {
-        const authorizedUser = createUserWebToken(filteredUser[0]);
+        const authorizedUser = createUserWebToken({
+          userName: filteredUser[0].userName,
+          createdDate: filteredUser[0].createdDate,
+          numOfTransactions: filteredUser[0].numOfTransactions,
+        });
 
         if (authorizedUser) {
           return {
