@@ -1,0 +1,96 @@
+.SearchMoviesMainContainer {
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+    height: 100%;
+
+}
+
+.SearchMoviesMainContainer .SearchBoxContainer {
+    position: relative;
+    height: 70%;
+    width: 70%;
+    box-shadow: 0px 0px 6px 0px rgb(0, 0, 0);
+    border-radius: 7px;
+    overflow: hidden;
+    background: #000000c9;
+}
+
+
+
+.SearchBoxSearchAreaClose {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 2% auto;
+    width: 85%;
+    height: 30px;
+    transition: transform 0.5s ease;
+    transform: translateX(100%);
+    gap: 30px;
+    z-index: 100;
+}
+
+.open {
+    transform: translateX(0%);
+    width: 100%;
+}
+
+
+.SearchBoxSearchIconSpan {
+    display: flex;
+    height: auto;
+    width: 10%;
+    justify-content: center;
+}
+
+.SearchBoxSearchConfirmIconSpan {
+    display: flex;
+    flex-direction: column;
+    height: 62px;
+    width: 62px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 13px;
+}
+
+
+
+.SearchMoviesMainContainer .SearchBoxContainer .SearchedMoviesContinaer {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-top: solid 1px rgba(255, 255, 255, 0.773);
+    height: 90%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    >img {
+        position: relative;
+        width: 16.65%;
+        height: 50%;
+        z-index: 0;
+    }
+}
+
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f100;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #004470;
+    border-radius: 5px;
+    width: 100%;
+}

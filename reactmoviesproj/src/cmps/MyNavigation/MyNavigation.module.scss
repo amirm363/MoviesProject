@@ -1,0 +1,40 @@
+.MyNavigationMainContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.142);
+    z-index: 1;
+    // height: 10px;
+    padding: 1% 0;
+    border-bottom: 1px solid lightgray;
+
+    &:hover {
+        height: 2%;
+        transition: padding 0.25s ease-in;
+        background-color: rgba(0, 0, 0, 0.226);
+        transition: background-color 0.25 ease-in;
+    }
+
+    &:hover .MyNavigationSpan>* {
+        height: 100px;
+        width: 100px;
+        transition: height 0.25s ease-in, width 0.25s ease-in;
+    }
+}
+
+.MyNavigationSpan {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    width: 90%;
+    margin: 0 auto;
+    gap: 15px;
+
+    >* {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+}

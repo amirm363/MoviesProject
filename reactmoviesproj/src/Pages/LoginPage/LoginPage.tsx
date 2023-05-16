@@ -17,17 +17,34 @@ export default function LoginPage() {
     const [showLogOutButton, setShowLogOutButton] = useRecoilState<boolean>(logOutButton)
     const [wrongCredentials, setWrongCredentials] = useState<any>({ state: false, error: "" })
     const [requiredInputState, setRequiredInputState] = useState<any>({ userName: false, password: false })
+    const [inputs, setInputs] = useState<any[]>([{ type: "text", title: "User Name", stateFunction: (value: string) => setUserCredentials((prevValue: any) => ({ ...prevValue, userName: value })), height: "45px", width: "60%", isEmpty: requiredInputState.userName, required: true },
+    { type: "password", title: "Password", stateFunction: (value: string) => setUserCredentials((prevValue: any) => ({ ...prevValue, password: value })), height: "45px", width: "60%", isEmpty: requiredInputState.password, required: true }])
     const navigate = useNavigate();
 
-    const inputs = [<Input type={"text"} title={"User Name"} stateFunction={(value: string) => setUserCredentials({ ...userCredentials, userName: value })} height={"45px"} width={"60%"} isEmpty={requiredInputState.userName} required={true} />,
-    <Input type={"password"} title={"Password"} stateFunction={(value: string) => setUserCredentials({ ...userCredentials, password: value })} height={"45px"} width={"60%"} isEmpty={requiredInputState.password} required={true} />]
 
+    useEffect(() => { console.log(requiredInputState) }, [requiredInputState])
+
+    const validateCredentials = (): boolean => {
+        if (userCredentials.password === "") {
+            setRequiredInputState((prevState: any) => ({ ...prevState, password: true }))
+            return false;
+        } else if (userCredentials.password && requiredInputState.password) {
+            setRequiredInputState((prevState: any) => ({ ...prevState, password: false }))
+        }
+        if (userCredentials.userName === "") {
+            setRequiredInputState((prevState: any) => ({ ...prevState, userName: true }))
+            return false;
+        } else if (userCredentials.password && requiredInputState.userName) {
+            setRequiredInputState((prevState: any) => ({ ...prevState, userName: false }))
+        }
+        return true;
+    }
 
     const logInUser = async () => {
-
-
+        if (!validateCredentials()) return
         setIsLoading(!isLoading)
         const data = await axios.post('http://localhost:4000/', userCredentials)
+        console.log(data);
         console.log(data.data)
         if (data.data?.accessToken) {
             sessionStorage.setItem("connectedUser", JSON.stringify(data.data))
@@ -36,6 +53,7 @@ export default function LoginPage() {
         }
         else {
             setWrongCredentials({ state: true, error: data.data.error })
+            setUserCredentials({ userName: "", password: "" })
             setIsLoading(false)
         }
 
@@ -63,21 +81,6 @@ export default function LoginPage() {
 
         <>
             <MyForm header={"Login"} handleKeyPress={handleKeyPress} inputsArray={inputs} errorMessage={wrongCredentials.error} confirmFunc={logInUser} cancelFunc={cancelLogin} isLoading={isLoading} />
-            {/* <div className={`${Styles.LoginPageMainContainer} animate__animated animate__fadeIn`} onKeyDown={handleKeyPress}>
-                <div className={Styles.LoginPageInputsCard} >
-                    <h1>Login</h1>
-                    {isLoading ? <SmallLoaderCmp /> :
-                        <div className={Styles.InputsDiv}>
-                            <Input type={"text"} title={"User Name"} stateFunction={(value: string) => setUserCredentials({ ...userCredentials, userName: value })} height={"45px"} width={"60%"} />
-                            <Input type={"password"} title={"Password"} stateFunction={(value: string) => setUserCredentials({ ...userCredentials, password: value })} height={"45px"} width={"60%"} />
-                            {wrongCredentials.state && < span className={Styles.InputsDivErrorMessage}>{wrongCredentials.error}</span>}
-                        </div>}
-                    <span className={Styles.LoginButtonsContainer}>
-                        <MyButton onClickFunction={logInUser} title={"Confirm"} />
-                        <MyButton onClickFunction={cancelLogin} title={"Cancel"} />
-                    </span>
-                </div>
-            </div > */}
         </>
 
 

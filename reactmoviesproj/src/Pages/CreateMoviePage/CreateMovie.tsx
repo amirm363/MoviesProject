@@ -4,49 +4,51 @@ import MyForm from '../../cmps/FormCmp/MyForm.cmp'
 import Input from '../../cmps/InputCmp/Input.cmp'
 import { useNavigate } from 'react-router'
 import axios from 'axios'
+import { getAuthenticationToken } from '../../services/authentication.service'
 
 
 
 export default function CreateMovie() {
     const navigate = useNavigate()
     const [newMovieData, setNewMovieData] = useState<any>({ name: "", language: "", genres: [] })
+    const [requiredInputs, setRequiredInputs] = useState<any>({ name: false, language: false, genres: false })
     const [errorMessage, setErrorMessage] = useState<string>("")
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [requiredInputs, setRequiredInputs] = useState<any>({ name: false, language: false, genres: false })
-
+    // const [inputProps, setInputProps] = useState<any[]>([{ type: "text", title: "name", stateFunction: (value: string) => setNewMovieData({ ...newMovieData, name: value }), height: "45px", width: "60%", require: true, isEmpty: requiredInputs.name }])
     const [inputs, setInputs] = useState<any[]>(
-        [<Input type={"text"} title={"Name"} stateFunction={(value: string) => setNewMovieData({ ...newMovieData, name: value })} height={"45px"} width={"60%"} required={true} isEmpty={requiredInputs.name} />,
-        <Input type={"text"} title={"Language"} stateFunction={(value: string) => setNewMovieData({ ...newMovieData, language: value })} height={"45px"} width={"60%"} required={true} isEmpty={requiredInputs.language} />,
-        <Input type={"text"} title={"Genres"} stateFunction={(value: string) => setNewMovieData({ ...newMovieData, genres: value.split(",") })} height={"45px"} width={"60%"} required={true} isEmpty={requiredInputs.genres} />]
+        [{ type: "text", title: "Name", stateFunction: (value: string) => setNewMovieData((prevState: any) => ({ ...prevState, name: value })), height: "45px", width: "60%", isEmpty: requiredInputs.name, required: true },
+        { type: "text", title: "Language", stateFunction: (value: string) => setNewMovieData((prevState: any) => ({ ...prevState, language: value })), height: "45px", width: "60%", isEmpty: requiredInputs.language, required: true },
+        { type: "text", title: "Genres", stateFunction: (value: string) => setNewMovieData((prevState: any) => ({ ...prevState, genres: value.split(",") })), height: "45px", width: "60%", isEmpty: requiredInputs.genres, required: true }]
     )
 
     const sendNewMovieDataToServer = async () => {
         console.log(validateRequiredInputs())
-        // if (validateRequiredInputs()) {
-        try {
-            setIsLoading(true);
-            const connectedUser = sessionStorage.getItem("connectedUser")
-            const token: string | null = connectedUser ? JSON.parse(connectedUser).accessToken : null;
-            const userName: string | null = connectedUser ? JSON.parse(connectedUser).userName : null;
-            const request = await axios.post("http://localhost:4000/CreateMovie", newMovieData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                    'ConnectedUser': `${userName}`
-                }
-            })
-            setNewMovieData({ name: "", language: "", genres: [] })
-            console.log(request.status)
+        if (validateRequiredInputs()) {
+            try {
+                setIsLoading(true);
+                const authData = getAuthenticationToken()
+                // const connectedUser = sessionStorage.getItem("connectedUser")
+                // const token: string | null = connectedUser ? JSON.parse(connectedUser).accessToken : null;
+                // const userName: string | null = connectedUser ? JSON.parse(connectedUser).userName : null;
+                const request = await axios.post("http://localhost:4000/CreateMovie", newMovieData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authData.token}`,
+                        'ConnectedUser': `${authData.userName}`
+                    }
+                })
+                setNewMovieData({ name: "", language: "", genres: [] })
+                console.log(request.status)
 
-        } catch (err: any) {
-            setErrorMessage(err.response.data.error)
+            } catch (err: any) {
+                setErrorMessage(err.response.data.error)
 
+            }
+            setIsLoading(false);
         }
-        setIsLoading(false);
-        // }
-        // else {
-        // setErrorMessage("One or more required inputs has no data")
-        // }
+        else {
+            setErrorMessage("One or more required inputs has no data")
+        }
     }
 
     const validateRequiredInputs = () => {
@@ -56,14 +58,14 @@ export default function CreateMovie() {
         tempRequiredInputs = newMovieData.genres.length === 0 ? { ...tempRequiredInputs, genres: true } : { ...tempRequiredInputs, genres: false }
         console.log(tempRequiredInputs)
         setRequiredInputs(tempRequiredInputs)
-        if (tempRequiredInputs.genres || tempRequiredInputs.language || tempRequiredInputs.name) {
-            return false
-        }
-        return true
+        return !(tempRequiredInputs.genres || tempRequiredInputs.language || tempRequiredInputs.name)
+
     }
+
     useEffect(() => {
         console.log(requiredInputs, newMovieData)
     }, [requiredInputs])
+
     const handleKeyPress = ((e: any) => {
         if (e.key === "Enter") {
 

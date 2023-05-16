@@ -9,9 +9,10 @@ interface InputProps {
     width?: string;
     isEmpty?: boolean;
     required: boolean;
+    Value?: string;
 }
 
-export default function Input({ title, type, stateFunction, height, width, isEmpty }: InputProps) {
+export default function Input({ title, type, stateFunction, height, width, isEmpty, Value }: InputProps) {
 
     return (
         <span className={Styles.InputSpan}>

@@ -1,12 +1,12 @@
 .LoaderContainer{
-    height: 34%;
+    height: 65%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
 }
 
-svg {
+.loader-svg {
     width: 3.25em;
     transform-origin: center;
     animation: rotate4 2s linear infinite;

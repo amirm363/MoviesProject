@@ -1,4 +1,18 @@
-POST http://localhost:4000/CreateMovie
+GET http://localhost:4000/CreateMovie
 content-type: application/json
 
-{"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJOYW1lIjoiYW1pcm0iLCJjcmVhdGVkRGF0ZSI6IjI5LzA0LzIwMjMifSwiaWF0IjoxNjgzMzc3NDc2fQ.Nycjmn58h9aBUejWwktXDVZA3opHF_lXrasPNnujlJQ","userName":"amirm","numOfTransactions":"99999","createdDate":"29/04/2023","isAdmin":true}
+{"accessToken"
+: 
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJOYW1lIjoiYW1pcm0iLCJjcmVhdGVkRGF0ZSI6IjI5LzA0LzIwMjMiLCJudW1PZlRyYW5zYWN0aW9ucyI6Ijk5OTk5In0sImlhdCI6MTY4NDIyMDk3M30.i0sjtDgM6LkKBtPi_udJ3uIiDWe2k3wYF8y6c5j2gZA"
+,"createdDate"
+: 
+"29/04/2023"
+,"isAdmin"
+: 
+true
+,"numOfTransactions"
+: 
+"99999"
+,"userName"
+: 
+"amirm"}

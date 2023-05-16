@@ -3,7 +3,7 @@ require("dotenv");
 
 const authenticateAccessToken = (req, res, next) => {
   try {
-    console.log(req.headers.authorization);
+    console.log("req.headers.authorization", req.headers.authorization);
     const verified = jwt.verify(
       req.headers.authorization.split(" ")[1],
       process.env.ACCESS_TOKEN_SECRET

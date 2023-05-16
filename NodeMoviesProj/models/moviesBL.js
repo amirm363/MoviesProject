@@ -14,4 +14,17 @@ const addMoviesToJSONFile = async (movie) => {
   }
 };
 
-module.exports = { addMoviesToJSONFile };
+const getMoviesSearchProps = async () => {
+  const allMovies = await getFileMovies();
+  const neededProperties = allMovies.map((movie) => {
+    return {
+      name: movie.name,
+      genres: [...movie.genres],
+      language: movie.language,
+      image: movie.image,
+    };
+  });
+  return neededProperties;
+};
+
+module.exports = { addMoviesToJSONFile, getMoviesSearchProps };

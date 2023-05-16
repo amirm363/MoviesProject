@@ -26,8 +26,10 @@ export default function MyForm({ header, handleKeyPress, inputsArray, errorMessa
                     {isLoading ? <SmallLoaderCmp /> :
                         <div className={Styles.MyFormInputsDiv}>
                             {inputsArray.map((input, index) => {
+                                // { console.log(input.isEmpty) }
                                 return <React.Fragment key={index}>
-                                    {input}
+                                    <Input type={input.type} title={input.title} stateFunction={input.stateFunction} height={input.height} width={input.width} required={input.required} isEmpty={input.isEmpty} />
+                                    {/* {input} */}
                                 </React.Fragment>
                             })}
                         </div>}

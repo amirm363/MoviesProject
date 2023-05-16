@@ -11,9 +11,11 @@ app.use(express.urlencoded({ extended: false }));
 
 const loginRouter = require("./routers/loginRouter");
 const createNewMovieRouter = require("./routers/createNewMovieRouter");
+const searchMoviesRouter = require("./routers/searchMoviesRouter");
 
 app.use("/", loginRouter);
 app.use("/CreateMovie", createNewMovieRouter);
+app.use("/SearchMovies", searchMoviesRouter);
 
 app.listen(process.env.PORT || 4000, () => {
   console.log(`listening on port ${process.env.PORT}`);

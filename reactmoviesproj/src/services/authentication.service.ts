@@ -8,3 +8,11 @@ export const isUserAuthenticated = (): boolean => {
     return false;
 
 }
+
+export const getAuthenticationToken = () => {
+    const connectedUser = sessionStorage.getItem("connectedUser")
+    return {
+        token: connectedUser ? JSON.parse(connectedUser).accessToken : null,
+        userName: connectedUser ? JSON.parse(connectedUser).userName : null
+    }
+}

@@ -8,6 +8,8 @@ import MenuPage from './Pages/MenuPage/MenuPage';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import CreateMovie from './Pages/CreateMoviePage/CreateMovie';
 import ApprovalModal from './cmps/ApprovalModal/ApprovalModal.cmp';
+import MyNavigation from './cmps/MyNavigation/MyNavigation.cmp';
+import SearchMoviesPage from './Pages/SearchMoviesPage/SearchMoviesPage';
 
 function App() {
   const navigate = useNavigate();
@@ -23,11 +25,12 @@ function App() {
   }
   return (
     <div className={Styles.AppContainer}>
+      <MyNavigation />
       <img src={require('./assets/Movies_Logo-removebg.png')} alt='Movies Logo' className={Styles.MoviesLogo} />
       <Routes>
         <Route path='/' element={<LoginPage />} />
         <Route path='/menu' element={<MenuPage />} />
-        <Route path="/SearchMovies" element={<h1>Search For Movies</h1>} />
+        <Route path="/SearchMovies" element={<SearchMoviesPage />} />
         <Route path="/CreateMovies" element={<CreateMovie />} />
         <Route path="/EditUsers" element={<h1>Edit users page</h1>} />
 
