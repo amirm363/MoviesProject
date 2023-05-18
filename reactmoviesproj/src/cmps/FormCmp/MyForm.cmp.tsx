@@ -22,7 +22,7 @@ export default function MyForm({ header, handleKeyPress, inputsArray, errorMessa
 
             <div className={`${Styles.MyFormMainContainer} animate__animated animate__fadeIn`} onKeyDown={handleKeyPress}>
                 <div className={Styles.MyFormInputsCard} >
-                    <h1>{header}</h1>
+                    <span>{header}</span>
                     {isLoading ? <SmallLoaderCmp /> :
                         <div className={Styles.MyFormInputsDiv}>
                             {inputsArray.map((input, index) => {

@@ -13,7 +13,7 @@ export default function ApprovalModal({ confirmFunc, cancelFunc }: ApprovalModal
         <div className={Styles.ModalContainer}>
             <span>Sign out</span>
             <span className={Styles.ButtonsContainer}>
-                <MyButton onClickFunction={confirmFunc} title={"Logout"} />
+                <MyButton onClickFunction={confirmFunc} title={"Logout"} color={"cadetblue"} />
                 <MyButton onClickFunction={cancelFunc} title={"Cancel"} color={"rgba(255, 0, 34, 0.514)"} />
             </span>
         </div>

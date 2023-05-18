@@ -25,7 +25,7 @@ function App() {
   }
   return (
     <div className={Styles.AppContainer}>
-      <MyNavigation />
+      <MyNavigation setOpenLogOutModal={() => setOpenLogOutModal(true)} />
       <img src={require('./assets/Movies_Logo-removebg.png')} alt='Movies Logo' className={Styles.MoviesLogo} />
       <Routes>
         <Route path='/' element={<LoginPage />} />
@@ -36,7 +36,6 @@ function App() {
 
       </Routes>
       {openLogOutModal && <ApprovalModal confirmFunc={logOutUser} cancelFunc={() => setOpenLogOutModal(false)} />}
-      {showLogOutButton && <button className={Styles.LogOutButton} title="logout" onClick={() => setOpenLogOutModal(true)}><span>&#x2715;</span></button>}
     </div>
 
   )

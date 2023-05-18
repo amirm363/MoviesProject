@@ -8,11 +8,12 @@
 }
 
 .MenuPageLinksArea {
-    margin: 8% 0;
+    margin: 6% 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     gap: 10px;
+    width: 37%;
 }
 
 .MenuPageLink {
@@ -23,12 +24,15 @@
     align-items: center;
     border: 1px solid rgba(255, 254, 254, 0.5);
     border-radius: 5px;
-    width: 300px;
-    height: 40px;
+    width: 100%;
+    height: 140px;
     box-shadow: 4px 4px 3px #3a3a3a;
-    color: rgba(255, 255, 255, 0.788);
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.679);
     cursor: pointer;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    -webkit-text-stroke: 1px rgb(0, 0, 0);
 
 
     &:active {
