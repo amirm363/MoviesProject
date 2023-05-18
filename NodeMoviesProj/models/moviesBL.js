@@ -18,6 +18,7 @@ const getMoviesSearchProps = async () => {
   const allMovies = await getFileMovies();
   const neededProperties = allMovies.map((movie) => {
     return {
+      id: movie.id,
       name: movie.name,
       genres: [...movie.genres],
       language: movie.language,

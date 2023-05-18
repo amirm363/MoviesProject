@@ -12,6 +12,7 @@ import { useDebounce } from 'use-debounce';
 import 'animate.css';
 import smallLoaderCmp from '../../cmps/smallLoaderCmp/SmallLoader.cmp';
 import SmallLoaderCmp from '../../cmps/smallLoaderCmp/SmallLoader.cmp';
+import MovieModal from '../../cmps/MovieModal/MovieModal.cmp';
 
 export default function SearchMoviesPage() {
     const [moviesData, setMoviesData] = useState<any[]>([])
@@ -20,8 +21,10 @@ export default function SearchMoviesPage() {
     const [debounceChangeIcon] = useDebounce(openSearchInputs, 400)
     const [changeIcon, setChangeIcon] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [openChosenMovieModal, setOpenChosenMovieModal] = useState<boolean>(false)
     const [searchedMoviesData, setSearcedhMoviesData] = useState<any>({ Name: "", Language: "", Genres: [] })
     const [searchedMovies, setSearchedMovies] = useState<any[]>([])
+    const [chosenMovie, setChosenMovie] = useState<any>({})
 
     useEffect(() => {
         if (openSearchInputs !== changeIcon) {
@@ -29,7 +32,13 @@ export default function SearchMoviesPage() {
         }
     }, [debounceChangeIcon])
 
-
+    const choseMovie = ((id: number) => {
+        const filteredMovie = moviesData.filter((movie: any) => movie.id === id)
+        console.log(filteredMovie[0])
+        setChosenMovie(filteredMovie[0])
+        setOpenChosenMovieModal(!openChosenMovieModal)
+    }
+    )
     const getMoviesFromServer = async () => {
         try {
             const authData = getAuthenticationToken()
@@ -41,6 +50,7 @@ export default function SearchMoviesPage() {
                     'ConnectedUser': `${authData.userName}`
                 }
             })
+            console.log("🚀 ~ file: SearchMoviesPage.tsx:44 ~ getMoviesFromServer ~ moviesFetchedData:", moviesFetchedData)
             let moviesDataSplitedArray: any = { Names: [], Genres: [], Languages: [] }
             moviesFetchedData.data.forEach((movie: any) => {
                 moviesDataSplitedArray.Names.push(movie.name)
@@ -49,9 +59,7 @@ export default function SearchMoviesPage() {
             })
 
             moviesDataSplitedArray.Languages = new Set(moviesDataSplitedArray.Languages)
-
             moviesDataSplitedArray.Genres = new Set(moviesDataSplitedArray.Genres)
-
             moviesDataSplitedArray.Names = new Set(moviesDataSplitedArray.Names)
 
             setMoviesData(moviesFetchedData.data)
@@ -130,9 +138,10 @@ export default function SearchMoviesPage() {
 
                     </span>
                     <div className={Styles.SearchedMoviesContinaer}>
-                        {searchedMovies.map((movie: any, index: number) => <img key={`${movie.name}_${index}`} src={movie.image["medium"]} className={"animate__animated animate__zoomIn"}></img>)}
+                        {searchedMovies.map((movie: any, index: number) => <img key={`${movie.name}_${index}`} src={movie.image["medium"]} onClick={() => choseMovie(movie.id)} className={"animate__animated animate__zoomIn"}></img>)}
                     </div>
                 </div>
+                {openChosenMovieModal && <MovieModal closeModal={() => setOpenChosenMovieModal(false)} movieData={chosenMovie} />}
             </div>
         </>
     )
