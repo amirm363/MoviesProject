@@ -25,6 +25,7 @@ export default function SearchMoviesPage() {
     const [searchedMoviesData, setSearcedhMoviesData] = useState<any>({ Name: "", Language: "", Genres: [] })
     const [searchedMovies, setSearchedMovies] = useState<any[]>([])
     const [chosenMovie, setChosenMovie] = useState<any>({})
+    const [moviesWithSameGenres, setMoviesWithSameGenres] = useState<any[]>([])
 
     useEffect(() => {
         if (openSearchInputs !== changeIcon) {
@@ -32,13 +33,26 @@ export default function SearchMoviesPage() {
         }
     }, [debounceChangeIcon])
 
-    const choseMovie = ((id: number) => {
-        const filteredMovie = moviesData.filter((movie: any) => movie.id === id)
+    const choseMovie = (movieData: any) => {
+        const filteredMovie = moviesData.filter((movie: any) => movie.id === movieData.id)
+        findAllMoviesWithSameGenres(movieData)
         console.log(filteredMovie[0])
         setChosenMovie(filteredMovie[0])
-        setOpenChosenMovieModal(!openChosenMovieModal)
+        setOpenChosenMovieModal(true)
     }
-    )
+
+    const findAllMoviesWithSameGenres = (movieGenres: any) => {
+
+        const filteredMovies: any[] = moviesData.filter((movie: any) => {
+            if (movieGenres.genres.length === movie.genres.length && movieGenres.name !== movie.name) {
+                return movieGenres.genres.every((genre: string) => {
+                    return movie.genres.includes(genre)
+                })
+            }
+        })
+        setMoviesWithSameGenres(filteredMovies)
+    }
+
     const getMoviesFromServer = async () => {
         try {
             const authData = getAuthenticationToken()
@@ -72,20 +86,29 @@ export default function SearchMoviesPage() {
         const moviesDataFromServer = getMoviesFromServer().then((result) => result);
         //  setMoviesData(moviesDataFromServer)
     }, [])
-    const searchMovies = () => {
+    const searchMovies = async () => {
         setIsLoading(true)
         try {
-            console.log(searchedMoviesData)
+            const authData = getAuthenticationToken()
+            console.log("🚀 ~ file: SearchMoviesPage.tsx:93 ~ searchMovies ~ authData:", authData)
             const tempSearchedMovies: any[] = moviesData?.filter((movie: any) => {
                 if (movie.name === searchedMoviesData.Name || movie.language === searchedMoviesData.Language || movie.genres.some((genre: string) => searchedMoviesData.Genres.includes(genre))) {
                     return movie
                 }
             })
+            const response = await axios.post("http://localhost:4000/SearchMovies", {}, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authData.token}`,
+                    'ConnectedUser': `${authData.userName}`
+                }
+            })
+            console.log("🚀 ~ file: SearchMoviesPage.tsx:98 ~ searchMovies ~ response:", response)
             console.log(tempSearchedMovies)
             setSearchedMovies(tempSearchedMovies)
             setIsLoading(false)
         } catch (err) {
-
+            throw err
         }
 
     }
@@ -98,6 +121,7 @@ export default function SearchMoviesPage() {
                         <Autocomplete
                             disablePortal
                             id="movies-names"
+
                             onChange={(event: any, value: string) => {
                                 console.log(value)
                                 setSearcedhMoviesData((prevValue: any) => ({ ...prevValue, Name: value }))
@@ -108,6 +132,7 @@ export default function SearchMoviesPage() {
                         />
                         <Autocomplete
                             disablePortal
+
                             id="movies-names"
                             onChange={(event: any, value: string) => {
                                 console.log(value)
@@ -115,7 +140,7 @@ export default function SearchMoviesPage() {
                             }}
                             options={[...moviesDataAsArrays.Languages]}
                             style={{ width: "25%", height: "56px", backgroundColor: "white" }}
-                            renderInput={(params) => <TextField {...params} label="Language" />}
+                            renderInput={(params) => <TextField  {...params} label="Language" />}
                         />
                         <Autocomplete
                             multiple
@@ -138,10 +163,10 @@ export default function SearchMoviesPage() {
 
                     </span>
                     <div className={Styles.SearchedMoviesContinaer}>
-                        {searchedMovies.map((movie: any, index: number) => <img key={`${movie.name}_${index}`} src={movie.image["medium"]} onClick={() => choseMovie(movie.id)} className={"animate__animated animate__zoomIn"}></img>)}
+                        {searchedMovies.map((movie: any, index: number) => <img key={`${movie.name}_${index}`} src={movie.image["medium"]} onClick={() => choseMovie(movie)} className={"animate__animated animate__zoomIn"}></img>)}
                     </div>
                 </div>
-                {openChosenMovieModal && <MovieModal closeModal={() => setOpenChosenMovieModal(false)} movieData={chosenMovie} />}
+                {openChosenMovieModal && <MovieModal closeModal={() => setOpenChosenMovieModal(false)} movieData={chosenMovie} moviesWithSameGenres={moviesWithSameGenres} choseMovieFunction={choseMovie} />}
             </div>
         </>
     )

@@ -9,4 +9,10 @@ router.get("/", authenticateAccessToken, async (req, res) => {
   res.status(200).json(moviesData);
 });
 
+router.post("/", decreaseTransaction, (req, res) => {
+  res
+    .status(200)
+    .json({ success: "Transaction has been decreased successfully" });
+});
+
 module.exports = router;

@@ -1,3 +1,7 @@
+* {
+    user-select: none;
+}
+
 .MovieModalBackGround {
     position: fixed;
     top: 0;
@@ -15,11 +19,11 @@
     align-items: center;
     flex-direction: column;
     color: white;
-    padding: 1%;
+    padding: 2px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 60%;
+    height: 860px;
     width: fit-content;
     width: -moz-fit-content;
     background-color: black;
@@ -40,7 +44,8 @@
     gap: 10px;
     margin-top: 5%;
     width: 60%;
-    font-family: 'Oswald', sans-serif;
+
+
 }
 
 .MoviesDataFirstRow,
@@ -53,4 +58,77 @@
     width: 100%;
     white-space: wrap;
     font-family: 'Oswald', sans-serif;
+}
+
+.LinkToShowInfoSpan {
+    margin: 3% 0;
+    display: inline-flex;
+    width: 90%;
+    justify-content: center;
+    background-color: rgba(56, 56, 56, 0.517);
+    border-radius: 5px;
+
+    &:active {
+        background-color: transparent;
+    }
+
+    >a {
+        text-align: center;
+        font-family: 'Oswald', sans-serif;
+        font-size: 20px;
+        text-decoration: none;
+        width: 100%;
+        padding: 2%;
+        color: rgb(0, 98, 211);
+    }
+
+    &a:visited {
+        color: rgb(0, 98, 211)
+    }
+}
+
+.MoviesWithTheSameGenresContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    >span {
+        font-family: 'Oswald', sans-serif;
+        font-size: 20px;
+        color: rgb(223, 51, 223);
+    }
+
+    >div img {
+        cursor: pointer;
+    }
+}
+
+.MoviesWithTheSameGenresContainer .PaginationUl {
+    margin: 1% 0 0 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 50px;
+    width: 100%;
+    list-style-type: none;
+    font-family: 'Oswald', sans-serif;
+
+
+}
+
+
+.PaginationLi {
+    cursor: pointer;
+    font-size: 15px;
+    transition: font-size 0.3s ease;
+
+}
+
+.PaginationLiClicked {
+    font-size: 22px;
+    transition: font-size 0.3s ease;
 }

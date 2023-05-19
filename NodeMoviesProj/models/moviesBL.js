@@ -20,6 +20,7 @@ const getMoviesSearchProps = async () => {
     return {
       id: movie.id,
       name: movie.name,
+      url: movie.url,
       genres: [...movie.genres],
       language: movie.language,
       image: movie.image,

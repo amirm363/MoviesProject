@@ -3,6 +3,7 @@ import Styles from './MyNavigation.module.scss'
 import Person2RoundedIcon from '@mui/icons-material/Person2Rounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import 'animate.css';
+import { styled } from '@mui/material';
 
 interface MyNavigationProps {
     setOpenLogOutModal: () => void;
@@ -39,7 +40,8 @@ export default function MyNavigation({ setOpenLogOutModal }: MyNavigationProps) 
                             <span onClick={setOpenLogOutModal}>LOGOUT</span>
                         </div>}
                 </li>
-                <li><MenuRoundedIcon /></li>
+                <li><img src={require('../../assets/Small_tvshows_logo-removebg-preview.png')} style={{ height: "50px", width: "50px" }} /><MenuRoundedIcon /></li>
+
             </ul>
 
         </nav>
