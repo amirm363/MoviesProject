@@ -12,6 +12,7 @@
     border-bottom: 1px solid rgba(102, 102, 102, 0.343);
     transition: height 0.35s ease-in-out, background-color 0.35s ease-in-out;
     ;
+    font-family: 'Oswald', sans-serif;
 
     &:hover {
         height: 65px;
@@ -66,7 +67,7 @@
         color: white;
         font-weight: bold;
         display: inline-block;
-        -webkit-text-stroke: 0.5px rgb(0, 0, 0);
+        // -webkit-text-stroke: 0.5px rgb(0, 0, 0);
         font-size: 19px;
 
         &:active {
