@@ -1,19 +1,28 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv");
-const { getUsers } = require("../DALs/usersFileDAL");
+const { getUsers, setUsers } = require("../DALs/usersFileDAL");
 const { createUserWebToken } = require("./jwtBL");
 
 const authenticateUser = async (user) => {
   const plainPass = user.password;
   const users = await getUsers();
-  const filteredUser = users.filter((currentUser) => {
+  const filteredUser = users.filter((currentUser, index) => {
     if (currentUser.userName === user.userName) return currentUser;
   });
-
+  const filtereUserIndex = users.findIndex(
+    (user) => user.userName === filteredUser[0].userName
+  );
+  console.log(filteredUser[0], filtereUserIndex);
   if (filteredUser.length > 0) {
-    if (!checkForCredits(filteredUser[0])) {
-      return { error: "User is out of transaction credits" };
+    if (!checkDate(filteredUser[0])) {
+      if (!checkForCredits(filteredUser[0])) {
+        return { error: "User is out of transaction credits" };
+      }
+    }
+    filteredUser[0].date = new Date();
+    if (!checkIfAdmin(user, users)) {
+      filteredUser[0].numOfTransactions = 10;
     }
     try {
       const result = await bcrypt.compare(plainPass, filteredUser[0].password);
@@ -22,15 +31,19 @@ const authenticateUser = async (user) => {
           userName: filteredUser[0].userName,
           createdDate: filteredUser[0].createdDate,
           numOfTransactions: filteredUser[0].numOfTransactions,
+          date: filteredUser[0].date,
         });
 
         if (authorizedUser) {
+          users[filtereUserIndex] = filteredUser[0];
+          setUsers(users);
           return {
             accessToken: authorizedUser,
             userName: filteredUser[0].userName,
             numOfTransactions: filteredUser[0].numOfTransactions,
             createdDate: filteredUser[0].createdDate,
             isAdmin: checkIfAdmin(user, users),
+            date: filteredUser[0].date,
           };
         }
       }
@@ -51,4 +64,14 @@ const checkIfAdmin = (user, users) => {
   return users[0].userName === user.userName;
 };
 
-module.exports = { authenticateUser, checkForCredits, checkIfAdmin };
+const checkDate = (user) => {
+  const todayDate = new Date();
+  if (user?.date) {
+    if (user.date.getDate() < todayDate.getDate()) {
+      return true;
+    }
+  }
+  return false;
+};
+
+module.exports = { authenticateUser, checkForCredits, checkIfAdmin, checkDate };

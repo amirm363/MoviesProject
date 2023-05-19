@@ -25,7 +25,7 @@ function App() {
   }
   return (
     <div className={Styles.AppContainer}>
-      <MyNavigation setOpenLogOutModal={() => setOpenLogOutModal(true)} />
+      {window.location.pathname !== '/' && <MyNavigation setOpenLogOutModal={() => setOpenLogOutModal(true)} />}
       <img src={require('./assets/TV_SHOWS_PORTAL-removebg-previewCOPY.png')} alt='Movies Logo' className={Styles.MoviesLogo} />
       <Routes>
         <Route path='/' element={<LoginPage />} />

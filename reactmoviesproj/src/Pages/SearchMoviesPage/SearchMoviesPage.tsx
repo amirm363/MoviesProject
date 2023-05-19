@@ -26,6 +26,7 @@ export default function SearchMoviesPage() {
     const [searchedMovies, setSearchedMovies] = useState<any[]>([])
     const [chosenMovie, setChosenMovie] = useState<any>({})
     const [moviesWithSameGenres, setMoviesWithSameGenres] = useState<any[]>([])
+    const [outOfTransactionsMessage, setOutOfTransactionsMessage] = useState<any>({ Message: "Insufficient credits, please come back tomorrow 👋😊", flag: false })
 
     useEffect(() => {
         if (openSearchInputs !== changeIcon) {
@@ -80,6 +81,7 @@ export default function SearchMoviesPage() {
             setMoviesDataAsArrays(moviesDataSplitedArray)
         } catch (err) {
             console.log("ERROR")
+
         }
     }
     useEffect(() => {
@@ -108,7 +110,8 @@ export default function SearchMoviesPage() {
             setSearchedMovies(tempSearchedMovies)
             setIsLoading(false)
         } catch (err) {
-            throw err
+            console.log(err)
+            setOutOfTransactionsMessage({ ...outOfTransactionsMessage, flag: true })
         }
 
     }
@@ -116,52 +119,55 @@ export default function SearchMoviesPage() {
         <>
             <div className={Styles.SearchMoviesMainContainer}>
                 <div className={Styles.SearchBoxContainer}>
-                    <span className={`${Styles.SearchBoxSearchAreaClose} ${openSearchInputs ? Styles.open : ''}`}>
-                        <span className={`${Styles.SearchBoxSearchIconSpan}`} onClick={() => setOpenSearchInputs(!openSearchInputs)}>{!changeIcon ? <SearchIcon className={openSearchInputs ? "animate__animated animate__flipOutY" : "animate__animated animate__flipInY"} style={{ color: "white" }} /> : <CloseIcon className={openSearchInputs ? "animate__animated animate__flipInY" : "animate__animated animate__flipOutY"} style={{ color: "white" }} />}</span>
-                        <Autocomplete
-                            disablePortal
-                            id="movies-names"
+                    {
+                        !outOfTransactionsMessage.flag ?
+                            <span className={`${Styles.SearchBoxSearchAreaClose} ${openSearchInputs ? Styles.open : ''}`}>
+                                <span className={`${Styles.SearchBoxSearchIconSpan}`} onClick={() => setOpenSearchInputs(!openSearchInputs)}>{!changeIcon ? <SearchIcon className={openSearchInputs ? "animate__animated animate__flipOutY" : "animate__animated animate__flipInY"} style={{ color: "white" }} /> : <CloseIcon className={openSearchInputs ? "animate__animated animate__flipInY" : "animate__animated animate__flipOutY"} style={{ color: "white" }} />}</span>
+                                <Autocomplete
+                                    disablePortal
+                                    id="movies-names"
 
-                            onChange={(event: any, value: string) => {
-                                console.log(value)
-                                setSearcedhMoviesData((prevValue: any) => ({ ...prevValue, Name: value }))
-                            }}
-                            options={[...moviesDataAsArrays.Names]}
-                            style={{ width: "25%", height: "56px", backgroundColor: "white" }}
-                            renderInput={(params) => <TextField {...params} label="Name" />}
-                        />
-                        <Autocomplete
-                            disablePortal
+                                    onChange={(event: any, value: string) => {
+                                        console.log(value)
+                                        setSearcedhMoviesData((prevValue: any) => ({ ...prevValue, Name: value }))
+                                    }}
+                                    options={[...moviesDataAsArrays.Names]}
+                                    style={{ width: "25%", height: "56px", backgroundColor: "white" }}
+                                    renderInput={(params) => <TextField {...params} label="Name" />}
+                                />
+                                <Autocomplete
+                                    disablePortal
 
-                            id="movies-names"
-                            onChange={(event: any, value: string) => {
-                                console.log(value)
-                                setSearcedhMoviesData((prevValue: any) => ({ ...prevValue, Language: value }))
-                            }}
-                            options={[...moviesDataAsArrays.Languages]}
-                            style={{ width: "25%", height: "56px", backgroundColor: "white" }}
-                            renderInput={(params) => <TextField  {...params} label="Language" />}
-                        />
-                        <Autocomplete
-                            multiple
-                            disablePortal
-                            onChange={(event: any, value: string[]) => {
-                                console.log(value)
-                                setSearcedhMoviesData((prevValue: any) => ({ ...prevValue, Genres: value }))
-                            }}
-                            id="movies-names"
-                            options={[...moviesDataAsArrays.Genres]}
-                            style={{ width: "25%", height: "56px", backgroundColor: "white", overflow: "auto" }}
-                            renderInput={(params) => <TextField {...params} label="Genres" />}
-                        />
-                        <span className={`${Styles.SearchBoxSearchConfirmIconSpan}`} onClick={searchMovies}>
-                            {isLoading ? <SmallLoaderCmp /> : <>
-                                <CheckIcon color='success' /> <label>Search</label>
-                            </>
-                            }
-                        </span>
+                                    id="movies-names"
+                                    onChange={(event: any, value: string) => {
+                                        console.log(value)
+                                        setSearcedhMoviesData((prevValue: any) => ({ ...prevValue, Language: value }))
+                                    }}
+                                    options={[...moviesDataAsArrays.Languages]}
+                                    style={{ width: "25%", height: "56px", backgroundColor: "white" }}
+                                    renderInput={(params) => <TextField  {...params} label="Language" />}
+                                />
+                                <Autocomplete
+                                    multiple
+                                    disablePortal
+                                    onChange={(event: any, value: string[]) => {
+                                        console.log(value)
+                                        setSearcedhMoviesData((prevValue: any) => ({ ...prevValue, Genres: value }))
+                                    }}
+                                    id="movies-names"
+                                    options={[...moviesDataAsArrays.Genres]}
+                                    style={{ width: "25%", height: "56px", backgroundColor: "white", overflow: "auto" }}
+                                    renderInput={(params) => <TextField {...params} label="Genres" />}
+                                />
+                                <span className={`${Styles.SearchBoxSearchConfirmIconSpan}`} onClick={searchMovies}>
+                                    {isLoading ? <SmallLoaderCmp /> : <>
+                                        <CheckIcon color='success' /> <label>Search</label>
+                                    </>
+                                    }
+                                </span>
 
-                    </span>
+                            </span>
+                            : <span className={Styles.ErrorMessageSpan}>{outOfTransactionsMessage.Message}</span>}
                     <div className={Styles.SearchedMoviesContinaer}>
                         {searchedMovies.map((movie: any, index: number) => <img key={`${movie.name}_${index}`} src={movie.image["medium"]} onClick={() => choseMovie(movie)} className={"animate__animated animate__zoomIn"}></img>)}
                     </div>

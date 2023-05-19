@@ -12,9 +12,10 @@ interface MyFormProps {
     confirmFunc: () => void;
     cancelFunc: () => void;
     isLoading: boolean;
+    colors: string[];
 }
 
-export default function MyForm({ header, handleKeyPress, inputsArray, errorMessage, confirmFunc, cancelFunc, isLoading }: MyFormProps) {
+export default function MyForm({ header, handleKeyPress, inputsArray, errorMessage, confirmFunc, cancelFunc, isLoading, colors }: MyFormProps) {
     const [loading, setLoading] = useState<boolean>(isLoading)
     const [inputs, setInputs] = useState<any[]>([...inputsArray])
     return (
@@ -34,8 +35,8 @@ export default function MyForm({ header, handleKeyPress, inputsArray, errorMessa
                             })}
                         </div>}
                     <span className={Styles.MyFormButtonsContainer}>
-                        <MyButton onClickFunction={confirmFunc} title={"Confirm"} />
-                        <MyButton onClickFunction={cancelFunc} title={"Cancel"} />
+                        <MyButton onClickFunction={confirmFunc} title={"Confirm"} color={colors.length ? colors[0] : ""} />
+                        <MyButton onClickFunction={cancelFunc} title={"Cancel"} color={colors.length ? colors[1] : ""} />
                     </span>
                     {errorMessage && < span className={Styles.MyFormInputsDivErrorMessage}>{errorMessage}</span>}
                 </div>

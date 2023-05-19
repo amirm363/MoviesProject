@@ -42,20 +42,23 @@ export default function LoginPage() {
 
     const logInUser = async () => {
         if (!validateCredentials()) return
-        setIsLoading(!isLoading)
-        const data = await axios.post('http://localhost:4000/', userCredentials)
-        console.log(data);
-        console.log(data.data)
-        if (data.data?.accessToken) {
-            sessionStorage.setItem("connectedUser", JSON.stringify(data.data))
-            setShowLogOutButton(true)
-            navigate("/menu")
-        }
-        else {
-            setWrongCredentials({ state: true, error: data.data.error })
+        try {
+            setIsLoading(!isLoading)
+            const data = await axios.post('http://localhost:4000/', { ...userCredentials, date: new Date() })
+            console.log(data);
+            console.log(data.data)
+            if (data.data?.accessToken) {
+                sessionStorage.setItem("connectedUser", JSON.stringify(data.data))
+                setShowLogOutButton(true)
+                navigate("/menu")
+            }
+        } catch (err: any) {
+            console.log(err)
+            setWrongCredentials({ state: true, error: err.response.data })
             setUserCredentials({ userName: "", password: "" })
             setIsLoading(false)
         }
+
 
     }
 
@@ -80,7 +83,7 @@ export default function LoginPage() {
 
 
         <>
-            <MyForm header={"Login"} handleKeyPress={handleKeyPress} inputsArray={inputs} errorMessage={wrongCredentials.error} confirmFunc={logInUser} cancelFunc={cancelLogin} isLoading={isLoading} />
+            <MyForm header={"Login"} handleKeyPress={handleKeyPress} inputsArray={inputs} errorMessage={wrongCredentials.error} confirmFunc={logInUser} cancelFunc={cancelLogin} isLoading={isLoading} colors={["#75a977", "#5e5e5e"]} />
         </>
 
 

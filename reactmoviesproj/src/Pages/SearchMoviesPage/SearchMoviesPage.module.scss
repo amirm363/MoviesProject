@@ -76,6 +76,18 @@
     }
 }
 
+.ErrorMessageSpan {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: coral;
+    font-family: 'Oswald', sans-serif;
+    margin: 2% auto;
+}
+
 
 
 /* width */

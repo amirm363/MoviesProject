@@ -81,7 +81,7 @@ export default function CreateMovie() {
     }
     return (
         <>
-            <MyForm header={"Create new movie"} handleKeyPress={handleKeyPress} inputsArray={inputs} errorMessage={errorMessage} confirmFunc={sendNewMovieDataToServer} cancelFunc={backToMenu} isLoading={isLoading} />
+            <MyForm header={"Create new movie"} handleKeyPress={handleKeyPress} inputsArray={inputs} errorMessage={errorMessage} confirmFunc={sendNewMovieDataToServer} cancelFunc={backToMenu} isLoading={isLoading} colors={[]} />
         </>
     )
 }
