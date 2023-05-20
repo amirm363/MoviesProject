@@ -160,7 +160,7 @@ export default function SearchMoviesPage() {
                                     renderInput={(params) => <TextField {...params} label="Genres" />}
                                 />
                                 <span className={`${Styles.SearchBoxSearchConfirmIconSpan}`} onClick={searchMovies}>
-                                    {isLoading ? <SmallLoaderCmp /> : <>
+                                    {isLoading ? <SmallLoaderCmp dimensions={{ width: "100%", height: "100%" }} /> : <>
                                         <CheckIcon color='success' /> <label>Search</label>
                                     </>
                                     }

@@ -7,7 +7,8 @@ const { authenticateUser } = require("../models/usersBL");
 const { decreaseTransaction } = require("../middlewares/transactions");
 const filePath = path.join(__dirname, "../Users.json");
 
-router.post("/", decreaseTransaction, async (req, res) => {
+router.post("/", async (req, res) => {
+  console.log("INSIDE THE ROUTE");
   try {
     res.json(
       await authenticateUser({

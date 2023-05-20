@@ -8,13 +8,12 @@ import SmallLoaderCmp from "../../cmps/smallLoaderCmp/SmallLoader.cmp"
 import MyButton from '../../cmps/ButtonCmp/MyButton.cmp';
 import { useNavigate } from 'react-router';
 import MyForm from '../../cmps/FormCmp/MyForm.cmp';
-import { logOutButton } from '../../store/atoms/loginAtoms';
+import { userCredentials } from '../../store/atoms/loginAtoms';
 
 
 export default function LoginPage() {
-    const [userCredentials, setUserCredentials] = useState<any>({ userName: "", password: "" })
+    const [recoilUserCredentials, setUserCredentials] = useRecoilState<any>(userCredentials)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [showLogOutButton, setShowLogOutButton] = useRecoilState<boolean>(logOutButton)
     const [wrongCredentials, setWrongCredentials] = useState<any>({ state: false, error: "" })
     const [requiredInputState, setRequiredInputState] = useState<any>({ userName: false, password: false })
     const [inputs, setInputs] = useState<any[]>([{ type: "text", title: "User Name", stateFunction: (value: string) => setUserCredentials((prevValue: any) => ({ ...prevValue, userName: value })), height: "45px", width: "60%", isEmpty: requiredInputState.userName, required: true },
@@ -25,36 +24,36 @@ export default function LoginPage() {
     useEffect(() => { console.log(requiredInputState) }, [requiredInputState])
 
     const validateCredentials = (): boolean => {
-        if (userCredentials.password === "") {
+        if (recoilUserCredentials.password === "") {
             setRequiredInputState((prevState: any) => ({ ...prevState, password: true }))
             return false;
-        } else if (userCredentials.password && requiredInputState.password) {
+        } else if (recoilUserCredentials.password && requiredInputState.password) {
             setRequiredInputState((prevState: any) => ({ ...prevState, password: false }))
         }
-        if (userCredentials.userName === "") {
+        if (recoilUserCredentials.userName === "") {
             setRequiredInputState((prevState: any) => ({ ...prevState, userName: true }))
             return false;
-        } else if (userCredentials.password && requiredInputState.userName) {
+        } else if (recoilUserCredentials.password && requiredInputState.userName) {
             setRequiredInputState((prevState: any) => ({ ...prevState, userName: false }))
         }
         return true;
     }
 
     const logInUser = async () => {
+        setWrongCredentials({ state: false, error: "" })
+        setIsLoading(!isLoading)
         if (!validateCredentials()) return
         try {
-            setIsLoading(!isLoading)
-            const data = await axios.post('http://localhost:4000/', { ...userCredentials, date: new Date() })
+            const data = await axios.post('http://localhost:4000/', { ...recoilUserCredentials, date: new Date() })
             console.log(data);
             console.log(data.data)
             if (data.data?.accessToken) {
                 sessionStorage.setItem("connectedUser", JSON.stringify(data.data))
-                setShowLogOutButton(true)
                 navigate("/menu")
             }
         } catch (err: any) {
             console.log(err)
-            setWrongCredentials({ state: true, error: err.response.data })
+            setWrongCredentials({ state: true, error: err.response.data.message })
             setUserCredentials({ userName: "", password: "" })
             setIsLoading(false)
         }
@@ -83,7 +82,7 @@ export default function LoginPage() {
 
 
         <>
-            <MyForm header={"Login"} handleKeyPress={handleKeyPress} inputsArray={inputs} errorMessage={wrongCredentials.error} confirmFunc={logInUser} cancelFunc={cancelLogin} isLoading={isLoading} colors={["#75a977", "#5e5e5e"]} />
+            <MyForm header={"Login"} handleKeyPress={handleKeyPress} inputsArray={inputs} errorMessage={wrongCredentials.error} confirmFunc={logInUser} cancelFunc={cancelLogin} isLoading={isLoading} colors={["rgb(237, 126, 0)", "#5e5e5e"]} />
         </>
 
 

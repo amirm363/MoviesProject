@@ -46,13 +46,14 @@
 
 .MyFormInputsDivErrorMessage {
     font-weight: bold;
-    color: rgba(255, 0, 0, 0.856);
+    color: rgb(237, 126, 0);
     font-size: 20px;
 }
 
 .MyFormButtonsContainer {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 20px;
     width: 100%;
     flex-wrap: wrap;

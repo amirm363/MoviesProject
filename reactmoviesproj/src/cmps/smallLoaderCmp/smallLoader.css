@@ -1,5 +1,5 @@
 .LoaderContainer{
-    height: 65%;
+    height: 34%;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -7,14 +7,14 @@
 }
 
 .loader-svg {
-    width: 3.25em;
+    width: 7.25em;
     transform-origin: center;
     animation: rotate4 2s linear infinite;
 }
 
 circle {
     fill: none;
-    stroke: hsl(214, 97%, 59%);
+    stroke: rgb(237, 126, 0);
     stroke-width: 2;
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;

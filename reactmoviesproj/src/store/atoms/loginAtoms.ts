@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-export const logOutButton = atom({
-    key: "logOutButton",
-    default: false
+export const userCredentials = atom({
+    key: "userCredentials",
+    default: { userName: "", password: "" }
 })
