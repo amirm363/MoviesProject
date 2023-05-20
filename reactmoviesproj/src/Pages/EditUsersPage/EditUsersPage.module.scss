@@ -1,0 +1,46 @@
+.EditUsersContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2%;
+}
+
+.EditUsersTable {
+    border: 1px solid #ddd;
+    color: #ddd;
+    // display: flex;
+    width: 80%;
+    border-collapse: collapse;
+    background-color: rgba(0, 0, 0, 0.648);
+    font-size: 18px;
+
+    // flex-direction: column;
+    >tr:first-child {
+
+        border-bottom: 1px solid white;
+
+    }
+
+    >tr td,
+    th {
+        text-align: left;
+        padding: 1%;
+        border-bottom: 1px solid #ddd;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    >tr td:last-child {
+        text-align: right;
+    }
+}
+
+.ButtonContainerTd {
+    // display: flex;
+    // // width: 16.667%;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
+
+}

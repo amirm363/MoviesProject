@@ -86,7 +86,7 @@ export default function SearchMoviesPage() {
     }
     useEffect(() => {
         const moviesDataFromServer = getMoviesFromServer().then((result) => result);
-        //  setMoviesData(moviesDataFromServer)
+
     }, [])
     const searchMovies = async () => {
         setIsLoading(true)

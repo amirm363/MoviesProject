@@ -11,6 +11,7 @@ import ApprovalModal from './cmps/ApprovalModal/ApprovalModal.cmp';
 import MyNavigation from './cmps/MyNavigation/MyNavigation.cmp';
 import SearchMoviesPage from './Pages/SearchMoviesPage/SearchMoviesPage';
 import StarField from './cmps/StarAnimation/StarField.cmp';
+import EditUsersPage from './Pages/EditUsersPage/EditUsersPage';
 
 function App() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function App() {
         <Route path='/menu' element={<MenuPage />} />
         <Route path="/SearchMovies" element={<SearchMoviesPage />} />
         <Route path="/CreateMovies" element={<CreateMovie />} />
-        <Route path="/EditUsers" element={<h1>Edit users page</h1>} />
+        <Route path="/EditUsers" element={<EditUsersPage />} />
 
       </Routes>
       {openLogOutModal && <ApprovalModal confirmFunc={logOutUser} cancelFunc={() => setOpenLogOutModal(false)} />}

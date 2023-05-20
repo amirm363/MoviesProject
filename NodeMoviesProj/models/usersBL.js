@@ -80,4 +80,14 @@ const checkDate = (user) => {
   return false;
 };
 
-module.exports = { authenticateUser, checkForCredits, checkIfAdmin, checkDate };
+const getAllUsers = async () => {
+  return await getUsers();
+};
+
+module.exports = {
+  authenticateUser,
+  checkForCredits,
+  checkIfAdmin,
+  checkDate,
+  getAllUsers,
+};
