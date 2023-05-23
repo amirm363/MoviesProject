@@ -9,10 +9,17 @@
     border: 1px solid #ddd;
     color: #ddd;
     // display: flex;
-    width: 80%;
+    width: 85%;
     border-collapse: collapse;
     background-color: rgba(0, 0, 0, 0.648);
     font-size: 18px;
+
+    >caption {
+        font-size: 2rem;
+        margin-bottom: 1%;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
 
     // flex-direction: column;
     >tr:first-child {
@@ -24,15 +31,38 @@
     >tr td,
     th {
         text-align: left;
-        padding: 1%;
+        padding: 1rem;
         border-bottom: 1px solid #ddd;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+
+        >input {
+            background-color: transparent;
+            height: 50px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            color: #ddd;
+            font-size: 1.125rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-left: 7px;
+        }
     }
 
     >tr td:last-child {
+
         text-align: right;
+
+        // width: 150px;
+        >button {
+
+            cursor: pointer;
+
+            &:active {
+                box-shadow: inset 0 0 2px black;
+            }
+        }
     }
 }
 

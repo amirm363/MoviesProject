@@ -12,6 +12,7 @@ export default function EditUsersPage() {
     const navigate = useNavigate()
     const [fetchedUsers, setFetchedUsers] = useState<any[]>([])
     const [isDeleted, setIsDeleted] = useState<string>("")
+    const [editMode, setEditMode] = useState<number>(-1)
 
 
 
@@ -49,10 +50,20 @@ export default function EditUsersPage() {
         }, 600)
     }
 
+    const editRow = (row: number) => {
+        if (editMode === row) {
+            setEditMode(-1)
 
+        } else {
+            setEditMode(row)
+        }
+    }
     return (
         <div className={Style.EditUsersContainer}>
             <table className={Style.EditUsersTable}>
+                <caption>
+                    Edit users
+                </caption>
                 <tr>
                     <th>User Name</th>
                     <th>Password</th>
@@ -69,14 +80,14 @@ export default function EditUsersPage() {
                         year: 'numeric'
                     })
                     return <tr key={user.userName} className={user.userName === isDeleted ? "animate__animated animate__flipOutX animate__faster" : ""}>
-                        <td>{user.userName}</td>
-                        <td>{user.password}</td>
-                        <td>{user.numOfTransactions}</td>
-                        <td>{user.createdDate}</td>
-                        <td>{formattedDate}</td>
-                        <td>{user.loggedInDate}</td>
-                        <td className={Style.ButtonContainerTd}>
-                            <button title='EditUser' style={{ backgroundColor: "lightblue", border: "none" }}><EditRoundedIcon /></button>
+                        <td data-cell="user name"><input type="text" title='userName' value={user.userName} disabled={editMode !== index ? true : false} style={{ border: editMode !== index ? "" : "1px solid white" }} /></td>
+                        <td data-cell="password"><input type="text" title='password' value={user.password} disabled={editMode !== index ? true : false} style={{ border: editMode !== index ? "" : "1px solid white" }} /></td>
+                        <td data-cell="numOfTransactions"><input type="number" title='numOfTransactions' value={user.numOfTransactions} disabled={editMode !== index ? true : false} style={{ border: editMode !== index ? "" : "1px solid white" }} /></td>
+                        <td data-cell="User Created Date">{user.createdDate}</td>
+                        <td data-cell="User Last login date">{formattedDate}</td>
+                        <td data-cell="is admin"><input type="text" title='isAdmin' />{user.loggedInDate}</td>
+                        <td data-cell="" className={Style.ButtonContainerTd}>
+                            <button title='EditUser' style={{ backgroundColor: "lightblue", border: "none" }} onClick={() => editRow(index)}><EditRoundedIcon /></button>
                             <button title='DeleteUser' style={{ backgroundColor: "rgb(237, 126, 0)", border: "none" }} onClick={() => deleteUser(user)}><DeleteForeverRoundedIcon /></button>
                         </td>
                     </tr>
