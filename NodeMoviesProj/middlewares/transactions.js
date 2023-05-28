@@ -9,11 +9,9 @@ const decreaseTransaction = async (req, res, next) => {
     const users = await getUsers();
     let filteredUser = users.filter((user) => user.userName === loggedUser);
     if (!filteredUser.length) {
-      console.log("WRONG USER NAME COMES FROM HERE");
       return res.status(403).send("Wrong username or password");
     }
     if (checkDate(filteredUser[0])) {
-      console.log("THE RESULT IS TRUE");
       return next();
     }
     if (!checkForCredits(filteredUser[0]))

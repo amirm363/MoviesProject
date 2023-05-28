@@ -36,7 +36,7 @@ function App() {
         <Route path="/EditUsers" element={<EditUsersPage />} />
 
       </Routes>
-      {openLogOutModal && <ApprovalModal confirmFunc={logOutUser} cancelFunc={() => setOpenLogOutModal(false)} />}
+      {openLogOutModal && <ApprovalModal confirmFunc={logOutUser} cancelFunc={() => setOpenLogOutModal(false)} title={"Sign out"} confirmButtonTitle={"Confirm"} cancelButtonTitle={"Cancel"} />}
       <StarField />
     </div>
 

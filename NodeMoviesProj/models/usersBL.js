@@ -84,10 +84,25 @@ const getAllUsers = async () => {
   return await getUsers();
 };
 
+const updateUser = async (user) => {
+  try {
+    const users = await getAllUsers();
+    users.forEach((filteredUser) => {
+      if (filteredUser.userName === user.userName) {
+        filteredUser = user;
+      }
+    });
+    setUsers(users);
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   authenticateUser,
   checkForCredits,
   checkIfAdmin,
   checkDate,
   getAllUsers,
+  updateUser,
 };
